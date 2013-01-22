@@ -2,9 +2,11 @@ require 'ruby-measurement/unit'
 require 'ruby-measurement/version'
 
 class Measurement
-  SCIENTIFIC_NUMBER = %r{([+-]?\d*[.]?\d+(?:[Ee][+-]?)?\d*)}.freeze
-  RATIONAL_NUMBER   = /\A\(?([+-]?\d+)\/(\d+)\)?\z/.freeze
-  COMPLEX_NUMBER    = /\A#{SCIENTIFIC_NUMBER}?#{SCIENTIFIC_NUMBER}i\b\z/.freeze
+  UNIT_REGEX        = /([a-zA-Z].*)/.freeze
+  SCIENTIFIC_NUMBER = /([+-]?\d*\.?\d+(?:[Ee][+-]?)?\d*)/.freeze
+  SCIENTIFIC_REGEX  = /\A#{SCIENTIFIC_NUMBER}\s*#{UNIT_REGEX}?\z/.freeze
+  RATIONAL_REGEX    = /\A([+-]?\d+\s+)?((\d+)\/(\d+))?\s*#{UNIT_REGEX}?\z/.freeze
+  COMPLEX_REGEX     = /\A#{SCIENTIFIC_NUMBER}?#{SCIENTIFIC_NUMBER}i\s*#{UNIT_REGEX}?\z/.freeze
   
   attr_reader :quantity, :unit
   
@@ -131,24 +133,31 @@ class Measurement
   private
   
   def parse(str)
-    value = str.strip
+    str = str.strip
     
-    quantity, unit_name = value.split(/\s+/, 2)
-    unit_name ||= 'count'
-    raise ArgumentError, "Missing quantity: '#{str}'" if !quantity || quantity.empty?
-    
-    @unit = self.class.units[unit_name.downcase]
-    raise ArgumentError, "Invalid unit: '#{unit_name}'" unless @unit
-    
-    if quantity =~ COMPLEX_NUMBER
-      real, imaginary = quantity.scan(COMPLEX_NUMBER).first
+    if str =~ COMPLEX_REGEX
+      real, imaginary, unit = str.scan(COMPLEX_REGEX).first
       @quantity = Complex(real.to_f, imaginary.to_f).to_f
-    elsif quantity =~ RATIONAL_NUMBER
-      numerator, denominator = quantity.scan(RATIONAL_NUMBER).first
-      @quantity = Rational(numerator.to_i, denominator.to_i).to_f
+    elsif str =~ SCIENTIFIC_REGEX
+      whole, unit = str.scan(SCIENTIFIC_REGEX).first
+      @quantity = whole.to_f
+    elsif str =~ RATIONAL_REGEX
+      whole, _, numerator, denominator, unit = str.scan(RATIONAL_REGEX).first
+      
+      if numerator && denominator
+        numerator = numerator.to_f + (denominator.to_f * whole.to_f)
+        denominator = denominator.to_f
+        @quantity = Rational(numerator, denominator).to_f
+      else
+        @quantity = whole.to_f
+      end
     else
-      @quantity = quantity.to_f
+      raise ArgumentError, "Unable to parse: '#{str}'"
     end
+    
+    unit ||= 'count'
+    @unit = self.class.units[unit.strip.downcase]
+    raise ArgumentError, "Invalid unit: '#{unit}'" unless @unit
   end
   
   define(:count) do |unit|
