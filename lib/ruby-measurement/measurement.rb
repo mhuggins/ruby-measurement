@@ -13,8 +13,15 @@ class Measurement
   class << self;  attr_accessor :units end
   @units = {}
   
-  def initialize(str)
-    parse(str)
+  def initialize(quantity, unit_name = :count)
+    unit = unit_name
+    unit = self.class.units[unit_name.to_s] if unit_name.kind_of?(Symbol) || unit_name.kind_of?(String)
+    
+    raise ArgumentError, "Invalid quantity: #{quantity}" unless quantity.kind_of?(Numeric)
+    raise ArgumentError, "Invalid unit: #{unit_name}" unless unit.kind_of?(Unit)
+    
+    @quantity = quantity
+    @unit = unit
   end
   
   def inspect
@@ -28,10 +35,10 @@ class Measurement
   def +(obj)
     case obj
     when Numeric
-      self.class.new("#{quantity + obj.to_f} #{unit}")
+      self.class.new(quantity + obj.to_f, unit)
     when self.class
       if obj.unit == unit
-        self.class.new("#{quantity + obj.quantity} #{unit}")
+        self.class.new(quantity + obj.quantity, unit)
       else
         self + obj.convert_to(unit)
       end
@@ -43,10 +50,10 @@ class Measurement
   def -(obj)
     case obj
     when Numeric
-      self.class.new("#{quantity - obj.to_f} #{unit}")
+      self.class.new(quantity - obj.to_f, unit)
     when self.class
       if obj.unit == unit
-        self.class.new("#{quantity - obj.quantity} #{unit}")
+        self.class.new(quantity - obj.quantity, unit)
       else
         self - obj.convert_to(unit)
       end
@@ -58,10 +65,10 @@ class Measurement
   def *(obj)
     case obj
     when Numeric
-      self.class.new("#{quantity * obj.to_f} #{unit}")
+      self.class.new(quantity * obj.to_f, unit)
     when self.class
       if obj.unit == unit
-        self.class.new("#{quantity * obj.quantity} #{unit}")
+        self.class.new(quantity * obj.quantity, unit)
       else
         self * obj.convert_to(unit)
       end
@@ -73,10 +80,10 @@ class Measurement
   def /(obj)
     case obj
     when Numeric
-      self.class.new("#{quantity / obj.to_f} #{unit}")
+      self.class.new(quantity / obj.to_f, unit)
     when self.class
       if obj.unit == unit
-        self.class.new("#{quantity / obj.quantity} #{unit}")
+        self.class.new(quantity / obj.quantity, unit)
       else
         self / obj.convert_to(unit)
       end
@@ -88,7 +95,7 @@ class Measurement
   def **(obj)
     case obj
     when Numeric
-      self.class.new("#{quantity ** obj.to_f} #{unit}")
+      self.class.new(quantity ** obj.to_f, unit)
     else
       raise ArgumentError, "Invalid arithmetic: #{self} ** #{obj}"
     end
@@ -107,7 +114,7 @@ class Measurement
     conversion = @unit.conversion(unit.name)
     raise ArgumentError, "Invalid conversion: '#@unit' to '#{unit.name}'" unless conversion
     
-    self.class.new("#{conversion.call(@quantity)} #{unit.name}")
+    self.class.new(conversion.call(@quantity), unit.name)
   end
   
   def convert_to!(unit_name)
@@ -122,42 +129,38 @@ class Measurement
   end
   
   def self.parse(str = '0')
-    new(str)
-  end
-  
-  def self.define(unit_name, &block)
-    unit = Unit.new(unit_name, &block)
-    unit.aliases.each { |a| @units[a.downcase] = unit }
-  end
-  
-  private
-  
-  def parse(str)
     str = str.strip
     
     if str =~ COMPLEX_REGEX
-      real, imaginary, unit = str.scan(COMPLEX_REGEX).first
-      @quantity = Complex(real.to_f, imaginary.to_f).to_f
+      real, imaginary, unit_name = str.scan(COMPLEX_REGEX).first
+      quantity = Complex(real.to_f, imaginary.to_f).to_f
     elsif str =~ SCIENTIFIC_REGEX
-      whole, unit = str.scan(SCIENTIFIC_REGEX).first
-      @quantity = whole.to_f
+      whole, unit_name = str.scan(SCIENTIFIC_REGEX).first
+      quantity = whole.to_f
     elsif str =~ RATIONAL_REGEX
-      whole, _, numerator, denominator, unit = str.scan(RATIONAL_REGEX).first
-      
+      whole, _, numerator, denominator, unit_name = str.scan(RATIONAL_REGEX).first
+
       if numerator && denominator
         numerator = numerator.to_f + (denominator.to_f * whole.to_f)
         denominator = denominator.to_f
-        @quantity = Rational(numerator, denominator).to_f
+        quantity = Rational(numerator, denominator).to_f
       else
-        @quantity = whole.to_f
+        quantity = whole.to_f
       end
     else
       raise ArgumentError, "Unable to parse: '#{str}'"
     end
     
-    unit ||= 'count'
-    @unit = self.class.units[unit.strip.downcase]
-    raise ArgumentError, "Invalid unit: '#{unit}'" unless @unit
+    unit_name ||= 'count'
+    unit = units[unit_name.strip.downcase]
+    raise ArgumentError, "Invalid unit: '#{unit_name}'" unless unit
+    
+    new(quantity, unit)
+  end
+  
+  def self.define(unit_name, &block)
+    unit = Unit.new(unit_name, &block)
+    unit.aliases.each { |a| @units[a.downcase] = unit }
   end
   
   define(:count) do |unit|
