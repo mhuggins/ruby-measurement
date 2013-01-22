@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = 'matt.huggins@gmail.com'
   gem.description   = 'Simple gem for calculating and converting measurements'
   gem.summary       = 'Simple gem for calculating and converting measurements'
-  gem.homepage      = 'https://github.com/mhuggins/measurement'
+  gem.homepage      = 'https://github.com/mhuggins/ruby-measurement'
   
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
