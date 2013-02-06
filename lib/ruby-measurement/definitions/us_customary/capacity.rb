@@ -2,14 +2,14 @@
 
 Measurement.define(:'acre ft') do |unit|
   unit.alias :'acre-foot', :'acre-feet'
-  unit.convert_to(:yd3) { |value| value * 1_613.33333 }
+  unit.convert_to(:yd3) { |value| value * Rational(4840, 3).to_f }
   unit.convert_to(:ft3) { |value| value * 43_560.0 }
   unit.convert_to(:in3) { |value| value * 75_271_680.0 }
 end
 
 Measurement.define(:'yd³') do |unit|
   unit.alias :yd3, :'yd^3', :'yd*yd*yd', :'cubic yard', :'cubic yards'
-  unit.convert_to(:'acre ft') { |value| value / 1_613.33333 }
+  unit.convert_to(:'acre ft') { |value| value / Rational(4840, 3).to_f }
   unit.convert_to(:ft3) { |value| value * 27.0 }
   unit.convert_to(:in3) { |value| value * 46_656.0 }
 end

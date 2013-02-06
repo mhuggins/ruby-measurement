@@ -5,6 +5,8 @@
 * Fix parsing of `'` and `"` for feet and inches. *Matt Huggins*
 * Implement missing metric weights and U.S. customary capacities.
   *Matt Huggins*
+* Fix several conversions that were found to be miscalculating.
+  *Matt Huggins*
 
 ## ruby-measurement 1.0.0 (Jan 22, 2013)
 
