@@ -1,4 +1,4 @@
-## ruby-measurement 1.1.0 (Unreleased)
+## ruby-measurement 1.1.0 (Feb 6, 2013)
 
 * Move unit definition logic into `Unit` class. *Matt Huggins*
 * Create test suite. *Matt Huggins*
