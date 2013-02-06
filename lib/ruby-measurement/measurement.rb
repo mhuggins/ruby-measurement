@@ -10,12 +10,9 @@ class Measurement
   
   attr_reader :quantity, :unit
   
-  class << self;  attr_accessor :units end
-  @units = {}
-  
   def initialize(quantity, unit_name = :count)
     unit = unit_name
-    unit = self.class.units[unit_name.to_s] if unit_name.kind_of?(Symbol) || unit_name.kind_of?(String)
+    unit = Unit[unit_name.to_s] if unit_name.kind_of?(Symbol) || unit_name.kind_of?(String)
     
     raise ArgumentError, "Invalid quantity: #{quantity}" unless quantity.kind_of?(Numeric)
     raise ArgumentError, "Invalid unit: #{unit_name}" unless unit.kind_of?(Unit)
@@ -106,7 +103,7 @@ class Measurement
   end
   
   def convert_to(unit_name)
-    unit = self.class.unit(unit_name)
+    unit = Unit[unit_name]
     raise ArgumentError, "Invalid unit: '#{unit_name}'" unless unit
     
     return dup if unit == @unit
@@ -121,11 +118,6 @@ class Measurement
     measurement = convert_to(unit_name)
     @unit, @quantity = measurement.unit, measurement.quantity
     self
-  end
-  
-  def self.unit(unit_name)
-    unit_name = unit_name.to_s
-    @units.values.find { |unit| unit.aliases.include?(unit_name) }
   end
   
   def self.parse(str = '0')
@@ -152,15 +144,14 @@ class Measurement
     end
     
     unit_name ||= 'count'
-    unit = units[unit_name.strip.downcase]
+    unit = Unit[unit_name.strip.downcase]
     raise ArgumentError, "Invalid unit: '#{unit_name}'" unless unit
     
     new(quantity, unit)
   end
   
   def self.define(unit_name, &block)
-    unit = Unit.new(unit_name, &block)
-    unit.aliases.each { |a| @units[a.downcase] = unit }
+    Unit.define(unit_name, &block)
   end
   
   define(:count) do |unit|
