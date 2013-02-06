@@ -2,7 +2,7 @@ require 'ruby-measurement/unit'
 require 'ruby-measurement/version'
 
 class Measurement
-  UNIT_REGEX        = /([a-zA-Z].*)/.freeze
+  UNIT_REGEX        = /([a-zA-Z'"].*)/.freeze
   SCIENTIFIC_NUMBER = /([+-]?\d*\.?\d+(?:[Ee][+-]?)?\d*)/.freeze
   SCIENTIFIC_REGEX  = /\A#{SCIENTIFIC_NUMBER}\s*#{UNIT_REGEX}?\z/.freeze
   RATIONAL_REGEX    = /\A([+-]?\d+\s+)?((\d+)\/(\d+))?\s*#{UNIT_REGEX}?\z/.freeze
