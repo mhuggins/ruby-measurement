@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe Measurement::Unit::Builder do
-  subject do
-    Measurement::Unit::Builder.new(name, &block)
-  end
+  subject { Measurement::Unit::Builder.new(name, &block) }
   
   let(:name) { :hour }
   let(:block) { proc {} }
