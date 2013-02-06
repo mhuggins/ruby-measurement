@@ -1,5 +1,7 @@
 # Measurement
 
+[![Build Status](https://secure.travis-ci.org/mhuggins/ruby-measurement.png)](http://travis-ci.org/mhuggins/ruby-measurement)
+
 [ruby-measurement](https://github.com/mhuggins/ruby-measurement) is a simple
 Ruby gem for calculating and converting units of measure.
 
