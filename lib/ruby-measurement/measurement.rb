@@ -29,64 +29,23 @@ class Measurement
     "#{quantity} #{unit}"
   end
   
-  def +(obj)
-    case obj
-    when Numeric
-      self.class.new(quantity + obj.to_f, unit)
-    when self.class
-      if obj.unit == unit
-        self.class.new(quantity + obj.quantity, unit)
-      else
-        self + obj.convert_to(unit)
+  %w(+ - * /).each do |operator|
+    class_eval <<-END, __FILE__, __LINE__ + 1
+      def #{operator}(obj)
+        case obj
+        when Numeric
+          self.class.new(quantity #{operator} obj.to_f, unit)
+        when self.class
+          if obj.unit == unit
+            self.class.new(quantity #{operator} obj.quantity, unit)
+          else
+            self #{operator} obj.convert_to(unit)
+          end
+        else
+          raise ArgumentError, "Invalid arithmetic: \#{self} #{operator} \#{obj}"
+        end
       end
-    else
-      raise ArgumentError, "Invalid arithmetic: #{self} + #{obj}"
-    end
-  end
-  
-  def -(obj)
-    case obj
-    when Numeric
-      self.class.new(quantity - obj.to_f, unit)
-    when self.class
-      if obj.unit == unit
-        self.class.new(quantity - obj.quantity, unit)
-      else
-        self - obj.convert_to(unit)
-      end
-    else
-      raise ArgumentError, "Invalid arithmetic: #{self} - #{obj}"
-    end
-  end
-  
-  def *(obj)
-    case obj
-    when Numeric
-      self.class.new(quantity * obj.to_f, unit)
-    when self.class
-      if obj.unit == unit
-        self.class.new(quantity * obj.quantity, unit)
-      else
-        self * obj.convert_to(unit)
-      end
-    else
-      raise ArgumentError, "Invalid arithmetic: #{self} * #{obj}"
-    end
-  end
-  
-  def /(obj)
-    case obj
-    when Numeric
-      self.class.new(quantity / obj.to_f, unit)
-    when self.class
-      if obj.unit == unit
-        self.class.new(quantity / obj.quantity, unit)
-      else
-        self / obj.convert_to(unit)
-      end
-    else
-      raise ArgumentError, "Invalid arithmetic: #{self} / #{obj}"
-    end
+    END
   end
   
   def **(obj)
@@ -153,6 +112,8 @@ class Measurement
   def self.define(unit_name, &block)
     Unit.define(unit_name, &block)
   end
+  
+  private
   
   define(:count) do |unit|
     unit.convert_to(:dozen) { |value| value / 12.0 }
