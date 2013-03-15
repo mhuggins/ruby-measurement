@@ -34,12 +34,12 @@ quantity entered as well as the unit of measure.  This can be done through the
 The object returned by `Measurement.parse` is of type `Measurement`.
 
     m = Measurement.parse('12 yd')   # => 12.0 yd.
-    Measurement.quantity             # => 12.0
-    Measurement.unit                 # => yd.
+    m.quantity                       # => 12.0
+    m.unit                           # => yd.
 
 The object returned by `Measurement#unit` is of type `Measurement::Unit`.
 
-    u = Measurement.unit             # => yd.
+    u = m.unit                       # => yd.
     u.name                           # => "yd."
     u.aliases                        # => ["yd.", "yd", "yard", "yards"]
 
