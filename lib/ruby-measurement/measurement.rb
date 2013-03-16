@@ -90,7 +90,7 @@ class Measurement
       quantity = whole.to_f
     elsif str =~ RATIONAL_REGEX
       whole, _, numerator, denominator, unit_name = str.scan(RATIONAL_REGEX).first
-
+      
       if numerator && denominator
         numerator = numerator.to_f + (denominator.to_f * whole.to_f)
         denominator = denominator.to_f

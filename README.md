@@ -24,60 +24,79 @@ Or install it yourself as:
 
 The `Measurement` class is responsible for parsing strings to determine the
 quantity entered as well as the unit of measure.  This can be done through the
-`parse` method.
+`parse` method, which returns a `Measurement` object.
 
-    Measurement.parse('3 feet')      # => 3.0 ft.
-    Measurement.parse('25 fl oz')    # => 25.0 fl. oz.
-    Measurement.parse('12 tonnes')   # => 12.0 t
-    Measurement.parse('25 "')        # => 25.0 in.
+    Measurement.parse('3 feet')                # => 3.0 ft.
+    Measurement.parse('25 fl oz')              # => 25.0 fl. oz.
+    Measurement.parse('12 tonnes')             # => 12.0 t
+    Measurement.parse('25 "')                  # => 25.0 in.
 
-The object returned by `Measurement.parse` is of type `Measurement`.
+A measurement includes both a quantity and a unit.  Refer to the "Units"
+section below for more details on how to interact with a unit.
 
-    m = Measurement.parse('12 yd')   # => 12.0 yd.
-    m.quantity                       # => 12.0
-    m.unit                           # => yd.
+    measurement = Measurement.parse('12 yd')   # => 12.0 yd.
+    measurement.quantity                       # => 12.0
+    measurement.unit                           # => yd.
 
-The object returned by `Measurement#unit` is of type `Measurement::Unit`.
+The `String` and `Numeric` classes have also been extended to simplify the
+parsing of measurement values.
 
-    u = m.unit                       # => yd.
-    u.name                           # => "yd."
-    u.aliases                        # => ["yd.", "yd", "yard", "yards"]
+    '12 yd'.to_measurement                     # => 12.0 yd.
+    20.to_measurement                          # => 20.0 count
 
-## Converting units
+### Units
+
+The `Measurement::Unit` class is used to represent the units for a measurement.
+Predefined units can be looked up via `Measurement::Unit[]`.
+
+    unit = Measurement::Unit[:dozen]           # => doz
+
+Similarly, the `String#to_unit` and `Symbol#to_unit` method can be used to
+accomplish the same thing.
+
+    unit = 'dozen'.to_unit                     # => doz
+    unit = :dozen.to_unit                      # => doz
+
+Units provide access to their names and aliases.
+
+    unit.name                                  # => "yd."
+    unit.aliases                               # => ["yd.", "yd", "yard", "yards"]
+
+### Converting units
 
 This gem allows you to convert among compatible units as long as a conversion
 has been supplied when defining a unit.  The default supplied units include
 conversions among the same unit types (e.g.: converting feet to yards or meters
 to kilometers).
 
-    m = Measurement.parse('3 feet')  # => 3.0 ft.
-    m.convert_to(:yards)             # => 1.0 yd.
-    m.convert_to(:in)                # => 36.0 in.
-    m.convert_to(:inches)            # => 36.0 in.
+    measurement = Measurement.parse('3 feet')  # => 3.0 ft.
+    measurement.convert_to(:yards)             # => 1.0 yd.
+    measurement.convert_to(:in)                # => 36.0 in.
+    measurement.convert_to(:inches)            # => 36.0 in.
 
 NOTE: Converting between metric and U.S. customary systems is currently not
 included by default.  It is intended to be shipped in a future release.
 
-## Calculations
+### Calculations
 
 This gem allows you to add, subtract, multiply, or divide measurements that can
 be converted into one-another.
 
-    m1 = Measurement.parse('3 feet') # => 3.0 ft.
-    m2 = Measurement.parse('6 inch') # => 6.0 in.
-    m1 + m2                          # => 3.5 ft.
+    measurement1 = Measurement.parse('3 feet') # => 3.0 ft.
+    measurement2 = Measurement.parse('6 inch') # => 6.0 in.
+    measurement1 + measurement2                # => 3.5 ft.
 
 Additionally, measurements can have basic math operations performed using basic
 numeric values.
 
-    m = Measurement.parse('2 yards') # => 2.0 yd.
-    m * 6                            # => 12.0 yd.
-    m / 5                            # => 0.4 yd.
-    m + 3                            # => 5.0 yd.
-    m - 1                            # => 1.0 yd.
-    m ** 2                           # => 4.0 yd.
+    measurement = Measurement.parse('2 yards') # => 2.0 yd.
+    measurement * 6                            # => 12.0 yd.
+    measurement / 5                            # => 0.4 yd.
+    measurement + 3                            # => 5.0 yd.
+    measurement - 1                            # => 1.0 yd.
+    measurement ** 2                           # => 4.0 yd.
 
-## Specifying units
+### Specifying units
 
 By default, ruby-measurement ships with common areas, lengths, volumes, and
 weights/masses for the metric and U.S. customary systems.  This happens
@@ -113,7 +132,7 @@ system.
     require 'ruby-measurement/definitions/us_customary/volume'
     require 'ruby-measurement/definitions/us_customary/weight'
 
-## Defining custom units & conversions
+### Defining custom units & conversions
 
 This gem also enabled you to define units of measure that aren't included by
 default.
@@ -139,9 +158,9 @@ default.
 Note that the first value passed to `Measurement.define` is the unit format
 that will be used when displaying a measurement.
 
-    Measurement.parse('3 yr')        # => 3.0 yr
-    Measurement.parse('3 year')      # => 3.0 yr
-    Measurement.parse('3 years')     # => 3.0 yr
+    Measurement.parse('3 yr')                  # => 3.0 yr
+    Measurement.parse('3 year')                # => 3.0 yr
+    Measurement.parse('3 years')               # => 3.0 yr
 
 ## Contributing
 

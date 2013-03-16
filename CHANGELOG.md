@@ -1,3 +1,8 @@
+## ruby-measurement 1.2.0 (Mar 16, 2013)
+
+* Implement `String#to_measurement`, `String#to_unit`,
+  `Symbol#to_unit`, and `Numeric#to_measurement`. *Matt Huggins*
+
 ## ruby-measurement 1.1.0 (Feb 6, 2013)
 
 * Move unit definition logic into `Unit` class. *Matt Huggins*
