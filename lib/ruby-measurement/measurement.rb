@@ -82,24 +82,11 @@ class Measurement
   def self.parse(str = '0')
     str = str.strip
     
-    if str =~ COMPLEX_REGEX
-      real, imaginary, unit_name = str.scan(COMPLEX_REGEX).first
-      quantity = Complex(real.to_f, imaginary.to_f).to_f
-    elsif str =~ SCIENTIFIC_REGEX
-      whole, unit_name = str.scan(SCIENTIFIC_REGEX).first
-      quantity = whole.to_f
-    elsif str =~ RATIONAL_REGEX
-      whole, _, numerator, denominator, unit_name = str.scan(RATIONAL_REGEX).first
-      
-      if numerator && denominator
-        numerator = numerator.to_f + (denominator.to_f * whole.to_f)
-        denominator = denominator.to_f
-        quantity = Rational(numerator, denominator).to_f
-      else
-        quantity = whole.to_f
-      end
-    else
-      raise ArgumentError, "Unable to parse: '#{str}'"
+    case str
+      when COMPLEX_REGEX then unit_name, quantity = parse_complex(str)
+      when SCIENTIFIC_REGEX then unit_name, quantity = parse_scientific(str)
+      when RATIONAL_REGEX then unit_name, quantity = parse_rational(str)
+      else raise ArgumentError, "Unable to parse: '#{str}'"
     end
     
     unit_name ||= 'count'
@@ -114,6 +101,32 @@ class Measurement
   end
   
   private
+  
+  def self.parse_complex(str)
+    real, imaginary, unit_name = str.scan(COMPLEX_REGEX).first
+    quantity = Complex(real.to_f, imaginary.to_f).to_f
+    return unit_name, quantity
+  end
+  
+  def self.parse_scientific(str)
+    whole, unit_name = str.scan(SCIENTIFIC_REGEX).first
+    quantity = whole.to_f
+    return unit_name, quantity
+  end
+  
+  def self.parse_rational(str)
+    whole, _, numerator, denominator, unit_name = str.scan(RATIONAL_REGEX).first
+    
+    if numerator && denominator
+      numerator = numerator.to_f + (denominator.to_f * whole.to_f)
+      denominator = denominator.to_f
+      quantity = Rational(numerator, denominator).to_f
+    else
+      quantity = whole.to_f
+    end
+    
+    return unit_name, quantity
+  end
   
   define(:count) do |unit|
     unit.convert_to(:dozen) { |value| value / 12.0 }
