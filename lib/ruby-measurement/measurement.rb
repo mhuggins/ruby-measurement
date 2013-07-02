@@ -100,6 +100,10 @@ class Measurement
     Unit.define(unit_name, &block)
   end
   
+  def self.all
+    Unit.all
+  end
+  
   private
   
   def self.parse_complex(str)

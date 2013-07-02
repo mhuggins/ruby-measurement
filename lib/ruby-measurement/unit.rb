@@ -56,6 +56,10 @@ class Measurement
       @definitions[unit_name.to_s.downcase]
     end
     
+    def self.all
+      @definitions.keys
+    end
+    
     private
     
     def self.[]=(unit_name, unit)
