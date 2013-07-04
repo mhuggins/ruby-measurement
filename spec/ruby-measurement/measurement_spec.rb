@@ -124,14 +124,6 @@ describe Measurement do
     end
   end
   
-  describe '.all' do
-    it 'return all defined Unit' do
-      unit_defined = subject.all
-      unit_defined.should be_kind_of(Array)
-      unit_defined.should include("count")
-    end
-  end
-  
   describe '#convert_to' do
     let(:measurement) { subject.new(3) }
     

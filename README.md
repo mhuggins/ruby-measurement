@@ -162,12 +162,11 @@ that will be used when displaying a measurement.
     Measurement.parse('3 year')                # => 3.0 yr
     Measurement.parse('3 years')               # => 3.0 yr
 
-### List all units defined
+### List all units names defined
 
 List all keys you can use as unit
 
-    Measurement.all                            # => ['count','doz','dozen',...]
-    Measurement.parse("3 dozen")               # => 3 doz
+    Measurement.names                           # => ['count','doz','dozen',...]
 
 ## Contributing
 

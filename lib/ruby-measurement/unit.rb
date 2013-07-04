@@ -56,7 +56,7 @@ class Measurement
       @definitions[unit_name.to_s.downcase]
     end
     
-    def self.all
+    def self.names
       @definitions.keys
     end
     
