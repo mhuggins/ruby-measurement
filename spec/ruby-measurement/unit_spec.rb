@@ -74,14 +74,6 @@ describe Measurement::Unit do
       subject.inspect.should eq subject.name
     end
   end
-
-  describe '.names' do
-    it 'return all defined Unit name' do
-      unit_defined = Measurement::Unit.names
-      unit_defined.should be_kind_of(Array)
-      unit_defined.should include("count")
-    end
-  end
   
   describe '#==' do
     before do
@@ -122,6 +114,49 @@ describe Measurement::Unit do
     describe 'other object is not a Unit' do
       it 'returns false' do
         (subject == :hour).should be_false
+      end
+    end
+  end
+  
+  describe '.names' do
+    subject { Measurement::Unit }
+    
+    it 'returns all defined unit names' do
+      unit_names = subject.names
+      unit_names.should be_kind_of Array
+      unit_names.should include 'count'
+    end
+  end
+  
+  describe '.define' do
+    subject { Measurement::Unit }
+    
+    it 'returns a unit builder' do
+      builder = subject.define(:count)
+      builder.should be_a Measurement::Unit::Builder
+    end
+    
+    it 'accepts a block' do
+      builder = subject.define(:count) { |b| b.alias :ct }
+      builder.should be_a Measurement::Unit::Builder
+    end
+  end
+  
+  describe '.[]' do
+    subject { Measurement::Unit }
+    
+    describe 'for a unit name that is defined' do
+      it 'returns the unit' do
+        unit = subject[:dozen]
+        unit.should be_a Measurement::Unit
+        unit.name.should eq 'doz'
+        unit.aliases.should eq %w(doz dozen).to_set
+      end
+    end
+    
+    describe 'for a unit name that is not defined' do
+      it 'returns nil' do
+        subject[:potato].should be_nil
       end
     end
   end
