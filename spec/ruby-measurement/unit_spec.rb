@@ -74,6 +74,14 @@ describe Measurement::Unit do
       subject.inspect.should eq subject.name
     end
   end
+
+  describe '.names' do
+    it 'return all defined Unit name' do
+      unit_defined = Measurement::Unit.names
+      unit_defined.should be_kind_of(Array)
+      unit_defined.should include("count")
+    end
+  end
   
   describe '#==' do
     before do
