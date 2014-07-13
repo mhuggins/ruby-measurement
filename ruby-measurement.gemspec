@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = 'Simple gem for calculating and converting measurements'
   gem.summary       = 'Simple gem for calculating and converting measurements'
   gem.homepage      = 'https://github.com/mhuggins/ruby-measurement'
-  spec.license      = 'MIT'
+  gem.license       = 'MIT'
   
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
