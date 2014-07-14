@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Symbol do
+RSpec.describe Symbol do
   describe '#to_unit' do
     describe 'with valid unit' do
       subject { :dozen }
-      specify { subject.to_unit.should eq Measurement::Unit[:dozen] }
+      specify { expect(subject.to_unit).to eq Measurement::Unit[:dozen] }
     end
 
     describe 'with invalid unit' do

@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe String do
+RSpec.describe String do
   describe '#to_measurement' do
     describe 'with valid quantity' do
       subject { '3' }
-      specify { subject.to_measurement.should eq Measurement.new(3) }
+      specify { expect(subject.to_measurement).to eq Measurement.new(3) }
     end
     
     describe 'with valid quantity and unit' do
       subject { '3 dozen' }
-      specify { subject.to_measurement.should eq Measurement.new(3, :dozen) }
+      specify { expect(subject.to_measurement).to eq Measurement.new(3, :dozen) }
     end
     
     describe 'with valid quantity and invalid unit' do
@@ -26,7 +26,7 @@ describe String do
   describe '#to_unit' do
     describe 'with valid unit' do
       subject { 'dozen' }
-      specify { subject.to_unit.should eq Measurement::Unit[:dozen] }
+      specify { expect(subject.to_unit).to eq Measurement::Unit[:dozen] }
     end
     
     describe 'with invalid unit' do

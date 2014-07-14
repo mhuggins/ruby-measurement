@@ -45,7 +45,9 @@ class Measurement
     end
     
     def ==(obj)
-      obj.kind_of?(self.class) && hash == obj.hash
+      obj.kind_of?(self.class) && name == obj.name && aliases == obj.aliases && conversions.all? do |key, proc|
+        [-2.5, -1, 0, 1, 2.5].all? { |n| proc.call(n) == obj.conversions[key].call(n) }
+      end
     end
     
     def self.define(unit_name, &block)
