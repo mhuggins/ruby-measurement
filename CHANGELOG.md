@@ -1,3 +1,11 @@
+## ruby-measurement 1.2.2 (Jul 13, 2014)
+
+* Fix `Measurement::Unit#==` to properly compare units. *Matt Huggins*
+
+## ruby-measurement 1.2.1 (Jul 27, 2013)
+
+* Implement `Measurement.names` to list all available units. *Daniele Palombo*
+
 ## ruby-measurement 1.2.0 (Mar 16, 2013)
 
 * Implement `String#to_measurement`, `String#to_unit`,
