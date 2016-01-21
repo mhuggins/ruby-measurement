@@ -81,6 +81,7 @@ class Measurement
   
   def self.parse(str = '0')
     str = str.strip
+    str = sanitize_string(str)
     
     case str
       when COMPLEX_REGEX then unit_name, quantity = parse_complex(str)
@@ -101,6 +102,32 @@ class Measurement
   end
   
   private
+
+  def self.sanitize_string(str)
+    {
+      '¼' => ' 1/4',
+      '½' => ' 1/2',
+      '¾' => ' 3/4',
+      '⅓' => ' 1/3',
+      '⅔' => ' 2/3',
+      '⅕' => ' 1/5',
+      '⅖' => ' 2/5',
+      '⅗' => ' 3/5',
+      '⅘' => ' 4/5',
+      '⅙' => ' 1/6',
+      '⅚' => ' 5/6',
+      '⅛' => ' 1/8',
+      '⅜' => ' 3/8',
+      '⅝' => ' 5/8',
+      '⅞' => ' 7/8',
+
+      # Other string sanitizing that I ran into
+      /((\-)|\/(?!^\d)(?=\d\/))|\sto\s\d+|dia/ => ' ',
+
+    }.each { |s, r| str.sub! s, r }
+    
+    return str
+  end
   
   def self.parse_complex(str)
     real, imaginary, unit_name = str.scan(COMPLEX_REGEX).first
