@@ -14,12 +14,12 @@ RSpec.describe String do
 
     describe 'with valid quantity and invalid unit' do
       subject { '3 people' }
-      specify { expect { subject.to_measurement }.to raise_error }
+      specify { expect { subject.to_measurement }.to raise_error(ArgumentError) }
     end
 
     describe 'with invalid input' do
       subject { 'foobar' }
-      specify { expect { subject.to_measurement }.to raise_error }
+      specify { expect { subject.to_measurement }.to raise_error(ArgumentError) }
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe String do
 
     describe 'with invalid unit' do
       subject { 'person' }
-      specify { expect { subject.to_unit }.to raise_error }
+      specify { expect { subject.to_unit }.to raise_error(ArgumentError) }
     end
   end
 end
