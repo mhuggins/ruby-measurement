@@ -29,6 +29,14 @@ RSpec.describe Measurement do
     it 'converts to teaspoons' do
       expect(subject.convert_to(:tsp).quantity).to eq 768
     end
+
+    it 'converts to milliliters' do
+      expect(subject.convert_to(:ml).quantity).to eq 3785.411784
+    end
+
+    it 'converts to liters' do
+      expect(subject.convert_to(:l).quantity).to eq 3.785411784
+    end
   end
 
   describe 'quarts' do
@@ -56,6 +64,14 @@ RSpec.describe Measurement do
 
     it 'converts to teaspoons' do
       expect(subject.convert_to(:tsp).quantity).to eq 768
+    end
+
+    it 'converts to milliliters' do
+      expect(subject.convert_to(:ml).quantity).to eq 3785.411784
+    end
+
+    it 'converts to liters' do
+      expect(subject.convert_to(:l).quantity).to eq 3.785411784
     end
   end
 
@@ -85,6 +101,14 @@ RSpec.describe Measurement do
     it 'converts to teaspoons' do
       expect(subject.convert_to(:tsp).quantity).to eq 768
     end
+
+    it 'converts to milliliters' do
+      expect(subject.convert_to(:ml).quantity).to eq 3785.411784
+    end
+
+    it 'converts to liters' do
+      expect(subject.convert_to(:l).quantity).to eq 3.785411784
+    end
   end
 
   describe 'cups' do
@@ -112,6 +136,14 @@ RSpec.describe Measurement do
 
     it 'converts to teaspoons' do
       expect(subject.convert_to(:tsp).quantity).to eq 768
+    end
+
+    it 'converts to milliliters' do
+      expect(subject.convert_to(:ml).quantity).to eq 3785.411784
+    end
+
+    it 'converts to liters' do
+      expect(subject.convert_to(:l).quantity).to eq 3.785411784
     end
   end
 
@@ -141,6 +173,14 @@ RSpec.describe Measurement do
     it 'converts to teaspoons' do
       expect(subject.convert_to(:tsp).quantity).to eq 768
     end
+
+    it 'converts to milliliters' do
+      expect(subject.convert_to(:ml).quantity).to eq 3785.411784
+    end
+
+    it 'converts to liters' do
+      expect(subject.convert_to(:l).quantity).to eq 3.785411784
+    end
   end
 
   describe 'tablespoons' do
@@ -169,6 +209,14 @@ RSpec.describe Measurement do
     it 'converts to teaspoons' do
       expect(subject.convert_to(:tsp).quantity).to eq 768
     end
+
+    it 'converts to milliliters' do
+      expect(subject.convert_to(:ml).quantity).to eq 3785.411783936
+    end
+
+    it 'converts to liters' do
+      expect(subject.convert_to(:l).quantity).to eq 3.785411783936
+    end
   end
 
   describe 'teaspoons' do
@@ -196,6 +244,14 @@ RSpec.describe Measurement do
 
     it 'converts to tablespoons' do
       expect(subject.convert_to(:tbsp).quantity).to eq 256
+    end
+
+    it 'converts to milliliters' do
+      expect(subject.convert_to(:ml).quantity).to eq 3785.4117840384
+    end
+
+    it 'converts to liters' do
+      expect(subject.convert_to(:l).quantity).to eq 3.7854117840384
     end
   end
 end
