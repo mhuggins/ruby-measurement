@@ -231,7 +231,7 @@ RSpec.describe Measurement do
 
     it 'subtracts numeric values' do
       result = measurement - 4
-      expect(result.quantity).to eq -1
+      expect(result.quantity).to eq(-1)
       expect(result.unit).to eq measurement.unit
     end
 
@@ -240,7 +240,7 @@ RSpec.describe Measurement do
       expect(other.unit).to eq measurement.unit
 
       result = measurement - other
-      expect(result.quantity).to eq -1
+      expect(result.quantity).to eq(-1)
       expect(result.unit).to eq measurement.unit
     end
 
@@ -249,7 +249,7 @@ RSpec.describe Measurement do
       expect(other.unit).to_not eq measurement.unit
 
       result = measurement - other
-      expect(result.quantity).to eq -21
+      expect(result.quantity).to eq(-21)
       expect(result.unit).to eq measurement.unit
     end
 
