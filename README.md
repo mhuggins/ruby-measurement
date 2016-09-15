@@ -108,10 +108,10 @@ To include just one of these systems of measure, require the gem in per the
 following.
 
     require 'ruby-measurement/measurement'
-    
+
     # Metric units/conversions
     require 'ruby-measurement/definitions/metric'
-    
+
     # U.S. customary units/conversions
     require 'ruby-measurement/definitions/us_customary'
 
@@ -119,13 +119,13 @@ Additionally, specific categories of units of measure can be included per
 system.
 
     require 'ruby-measurement/measurement'
-    
+
     # Metric units/conversions
     require 'ruby-measurement/definitions/metric/area'
     require 'ruby-measurement/definitions/metric/length'
     require 'ruby-measurement/definitions/metric/volume'
     require 'ruby-measurement/definitions/metric/weight'
-    
+
     # U.S. customary units/conversions
     require 'ruby-measurement/definitions/us_customary/area'
     require 'ruby-measurement/definitions/us_customary/length'
@@ -142,13 +142,13 @@ default.
       unit.convert_to(:week) { |value| value / 7.0 }
       unit.convert_to(:year) { |value| value / 365.0 }
     end
-    
+
     Measurement.define(:wk) do |unit|
       unit.alias :week, :weeks
       unit.convert_to(:day) { |value| value * 7.0 }
       unit.convert_to(:year) { |value| value / 52.0 }
     end
-    
+
     Measurement.define(:yr) do |unit|
       unit.alias :year, :years
       unit.convert_to(:day) { |value| value * 365.0 }

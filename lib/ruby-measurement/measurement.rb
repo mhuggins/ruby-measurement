@@ -123,8 +123,8 @@ class Measurement
 
     private
 
-    def normalize(str)
-      str.dup.tap do |str|
+    def normalize(string)
+      string.dup.tap do |str|
         if str =~ Regexp.new(/(#{RATIOS.keys.join('|')})/)
           RATIOS.each do |search, replace|
             str.gsub!(search) { " #{replace}" }
