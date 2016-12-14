@@ -166,7 +166,7 @@ that will be used when displaying a measurement.
 
 List all keys you can use as unit
 
-    Measurement.names                           # => ['count','doz','dozen',...]
+    Measurement::Unit.names                    # => ['count','doz','dozen',...]
 
 ## Contributing
 
