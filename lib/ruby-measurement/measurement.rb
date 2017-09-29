@@ -79,12 +79,11 @@ class Measurement
     end
   end
 
-  # def ==(obj)
-  #   obj.kind_of?(self.class) && quantity == obj.quantity && unit == obj.unit
-  # end
-
   def <=>(obj)
-    return -1 unless obj.is_a(self.class)
+    if !obj.is_a?(self.class) || obj.unit != self.unit
+      raise ArgumentError.new("#{obj} and #{self} are not the same class or same unit.")
+    end
+
     if quantity < obj.quantity
       -1
     elsif quantity > obj.quantity
