@@ -81,7 +81,7 @@ class Measurement
 
   def <=>(obj)
     if !obj.is_a?(self.class) || obj.unit != self.unit
-      raise ArgumentError.new("#{obj} and #{self} are not the same class or same unit.")
+      return nil
     end
 
     if quantity < obj.quantity
