@@ -6,6 +6,6 @@ class String
   end
 
   def to_unit
-    Measurement::Unit[self] or raise ArgumentError, "Invalid unit: #{self}"
+    Measurement::Unit[self] or raise ArgumentError, "Invalid unit: '#{self}'"
   end
 end
