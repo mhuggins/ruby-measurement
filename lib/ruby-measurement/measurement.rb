@@ -34,8 +34,8 @@ class Measurement
     unit = unit_name
     unit = Unit[unit_name.to_s] if unit_name.kind_of?(Symbol) || unit_name.kind_of?(String)
 
-    raise ArgumentError, "Invalid quantity: #{quantity}" unless quantity.kind_of?(Numeric)
-    raise ArgumentError, "Invalid unit: #{unit_name}" unless unit.kind_of?(Unit)
+    raise ArgumentError, "Invalid quantity: '#{quantity}'" unless quantity.kind_of?(Numeric)
+    raise ArgumentError, "Invalid unit: '#{unit_name}'" unless unit.kind_of?(Unit)
 
     @quantity = quantity
     @unit = unit

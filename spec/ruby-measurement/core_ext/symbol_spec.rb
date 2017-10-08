@@ -9,7 +9,7 @@ RSpec.describe Symbol do
 
     describe 'with invalid unit' do
       subject { :person }
-      specify { expect { subject.to_unit }.to raise_error }
+      specify { expect { subject.to_unit }.to raise_error(ArgumentError, "Invalid unit: 'person'") }
     end
   end
 end

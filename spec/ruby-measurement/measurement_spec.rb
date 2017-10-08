@@ -38,13 +38,13 @@ RSpec.describe Measurement do
 
     describe 'with invalid quantity' do
       it 'raises exception' do
-        expect { subject.new('hi') }.to raise_exception
+        expect { subject.new('hi') }.to raise_error(ArgumentError, "Invalid quantity: 'hi'")
       end
     end
 
     describe 'with invalid unit' do
       it 'raises exception' do
-        expect { subject.new(3, :finklebaum) }.to raise_exception
+        expect { subject.new(3, :finklebaum) }.to raise_error(ArgumentError, "Invalid unit: 'finklebaum'")
       end
     end
   end
@@ -146,7 +146,7 @@ RSpec.describe Measurement do
       end
 
       it 'raises exception when undefined' do
-        expect { subject.parse('3 finklebaums') }.to raise_error
+        expect { subject.parse('3 finklebaums') }.to raise_error(ArgumentError, "Invalid unit: 'finklebaums'")
       end
     end
   end
@@ -174,11 +174,11 @@ RSpec.describe Measurement do
     end
 
     it 'raises exception if unit exists and is not convertable' do
-      expect { measurement.convert_to(:inches) }.to raise_error
+      expect { measurement.convert_to(:inches) }.to raise_error(ArgumentError, "Invalid conversion: 'count' to 'in.'")
     end
 
     it 'raises exception if unit does not exist' do
-      expect { measurement.convert_to(:finklebaum) }.to raise_error
+      expect { measurement.convert_to(:finklebaum) }.to raise_error(ArgumentError, "Invalid unit: 'finklebaum'")
     end
   end
 
@@ -222,7 +222,7 @@ RSpec.describe Measurement do
     it 'raises exception for incompatible units' do
       other = subject.new(4, :inches)
       expect(other.unit).to_not eq measurement.unit
-      expect { measurement + other }.to raise_error
+      expect { measurement + other }.to raise_error(ArgumentError, "Invalid conversion: 'in.' to 'count'")
     end
   end
 
@@ -256,7 +256,7 @@ RSpec.describe Measurement do
     it 'raises exception for incompatible units' do
       other = subject.new(4, :inches)
       expect(other.unit).to_not eq measurement.unit
-      expect { measurement - other }.to raise_error
+      expect { measurement - other }.to raise_error(ArgumentError, "Invalid conversion: 'in.' to 'count'")
     end
   end
 
@@ -290,7 +290,7 @@ RSpec.describe Measurement do
     it 'raises exception for incompatible units' do
       other = subject.new(4, :inches)
       expect(other.unit).to_not eq measurement.unit
-      expect { measurement * other }.to raise_error
+      expect { measurement * other }.to raise_error(ArgumentError, "Invalid conversion: 'in.' to 'count'")
     end
   end
 
@@ -324,7 +324,7 @@ RSpec.describe Measurement do
     it 'raises exception for incompatible units' do
       other = subject.new(4, :inches)
       expect(other.unit).to_not eq measurement.unit
-      expect { measurement / other }.to raise_error
+      expect { measurement / other }.to raise_error(ArgumentError, "Invalid conversion: 'in.' to 'count'")
     end
   end
 
@@ -336,7 +336,7 @@ RSpec.describe Measurement do
     end
 
     it 'raises exception for non-numeric values' do
-      expect { measurement ** subject.new(3) }.to raise_error
+      expect { measurement ** subject.new(3) }.to raise_error(ArgumentError, 'Invalid arithmetic: 3 count ** 3 count')
     end
   end
 
