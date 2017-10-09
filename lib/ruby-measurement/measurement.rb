@@ -4,6 +4,8 @@ require 'ruby-measurement/unit'
 require 'ruby-measurement/version'
 
 class Measurement
+  include Comparable
+
   UNIT_REGEX        = /([^\d\s\/].*)/.freeze
   SCIENTIFIC_NUMBER = /([+-]?\d*\.?\d+(?:[Ee][+-]?)?\d*)/.freeze
   SCIENTIFIC_REGEX  = /\A#{SCIENTIFIC_NUMBER}\s*#{UNIT_REGEX}?\z/.freeze
@@ -77,8 +79,18 @@ class Measurement
     end
   end
 
-  def ==(obj)
-    obj.kind_of?(self.class) && quantity == obj.quantity && unit == obj.unit
+  def <=>(obj)
+    if !obj.is_a?(self.class) || obj.unit != self.unit
+      return nil
+    end
+
+    if quantity < obj.quantity
+      -1
+    elsif quantity > obj.quantity
+      1
+    else
+      0
+    end
   end
 
   def convert_to(unit_name)

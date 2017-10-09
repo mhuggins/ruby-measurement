@@ -360,6 +360,46 @@ RSpec.describe Measurement do
     end
   end
 
+  describe '#>' do
+    let(:measurement) { subject.new(3) }
+
+    it 'raises ArgumentError for non-measurement objects' do
+      expect { measurement > 2 }.to raise_error(ArgumentError)
+    end
+
+    it 'returns false for measurements for different unit' do
+      expect { measurement > subject.new(2, :dozen) }.to raise_error(ArgumentError)
+    end
+
+    it 'returns true for measurements with same unit and larger quantity' do
+      expect(measurement > subject.new(2)).to be true
+    end
+
+    it 'returns false for measurements with same unit and smaller quantity' do
+      expect(measurement > subject.new(4)).to be false
+    end
+  end
+
+  describe '#<' do
+    let(:measurement) { subject.new(3) }
+
+    it 'raises ArgumentError for non-measurement objects' do
+      expect { measurement < 4 }.to raise_error(ArgumentError)
+    end
+
+    it 'returns false for measurements for different unit' do
+      expect { measurement < subject.new(4, :dozen) }.to raise_error(ArgumentError)
+    end
+
+    it 'returns true for measurements with same unit and smaller quantity' do
+      expect(measurement < subject.new(4)).to be true
+    end
+
+    it 'returns false for measurements with same unit and larger quantity' do
+      expect(measurement < subject.new(2)).to be false
+    end
+  end
+
   describe '#to_s' do
     it 'returns the quantity and unit' do
       expect(subject.new(3.5).to_s).to eq '3.5 count'
