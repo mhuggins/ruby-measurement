@@ -9,6 +9,7 @@ Measurement.define(:'mi.') do |unit|
   unit.convert_to(:ft) { |value| value * 5_280.0 }
   unit.convert_to(:in) { |value| value * 63_360.0 }
   unit.convert_to(:th) { |value| value * 63_360_000.0 }
+  unit.convert_to(:cm) { |value| value * 160_934.4 }
 end
 
 Measurement.define(:'fur.') do |unit|
@@ -20,6 +21,7 @@ Measurement.define(:'fur.') do |unit|
   unit.convert_to(:ft) { |value| value * 660.0 }
   unit.convert_to(:in) { |value| value * 7_920.0 }
   unit.convert_to(:th) { |value| value * 7_920_000.0 }
+  unit.convert_to(:cm) { |value| value * 20_116.84 }
 end
 
 Measurement.define(:'ch.') do |unit|
@@ -31,6 +33,7 @@ Measurement.define(:'ch.') do |unit|
   unit.convert_to(:ft) { |value| value * 66.0 }
   unit.convert_to(:in) { |value| value * 792.0 }
   unit.convert_to(:th) { |value| value * 792_000.0 }
+  unit.convert_to(:cm) { |value| value * 2_011.68 }
 end
 
 Measurement.define(:'ftm.') do |unit|
@@ -42,6 +45,7 @@ Measurement.define(:'ftm.') do |unit|
   unit.convert_to(:ft) { |value| value * 6.0 }
   unit.convert_to(:in) { |value| value * 72.0 }
   unit.convert_to(:th) { |value| value * 72_000.0 }
+  unit.convert_to(:cm) { |value| value * 182.88 }
 end
 
 Measurement.define(:'yd.') do |unit|
@@ -53,6 +57,7 @@ Measurement.define(:'yd.') do |unit|
   unit.convert_to(:ft) { |value| value * 3.0 }
   unit.convert_to(:in) { |value| value * 36.0 }
   unit.convert_to(:th) { |value| value * 36_000.0 }
+  unit.convert_to(:cm) { |value| value * 91.44 }
 end
 
 Measurement.define(:'ft.') do |unit|
@@ -64,6 +69,7 @@ Measurement.define(:'ft.') do |unit|
   unit.convert_to(:ftm) { |value| value / 6.0 }
   unit.convert_to(:in) { |value| value * 12.0 }
   unit.convert_to(:th) { |value| value * 12_000.0 }
+  unit.convert_to(:cm) { |value| value * 30.48 }
 end
 
 Measurement.define(:'in.') do |unit|
@@ -75,6 +81,7 @@ Measurement.define(:'in.') do |unit|
   unit.convert_to(:yd) { |value| value / 36.0 }
   unit.convert_to(:ft) { |value| value / 12.0 }
   unit.convert_to(:th) { |value| value * 1000.0 }
+  unit.convert_to(:cm) { |value| value * 2.54 }
 end
 
 Measurement.define(:'th.') do |unit|
@@ -86,4 +93,5 @@ Measurement.define(:'th.') do |unit|
   unit.convert_to(:yd) { |value| value / 36_000.0 }
   unit.convert_to(:ft) { |value| value / 12_000.0 }
   unit.convert_to(:in) { |value| value / 1000.0 }
+  unit.convert_to(:cm) { |value| value * 0.00_254 }
 end

@@ -33,6 +33,10 @@ RSpec.describe Measurement do
     it 'converts to thou' do
       expect(subject.convert_to(:th).quantity).to eq 63_360_000
     end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.4
+    end
   end
 
   describe 'furlongs' do
@@ -64,6 +68,10 @@ RSpec.describe Measurement do
 
     it 'converts to thou' do
       expect(subject.convert_to(:th).quantity).to eq 63_360_000
+    end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.72
     end
   end
 
@@ -97,6 +105,10 @@ RSpec.describe Measurement do
     it 'converts to thou' do
       expect(subject.convert_to(:th).quantity).to eq 63_360_000
     end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.4
+    end
   end
 
   describe 'fathoms' do
@@ -128,6 +140,10 @@ RSpec.describe Measurement do
 
     it 'converts to thou' do
       expect(subject.convert_to(:th).quantity).to eq 63_360_000
+    end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.4
     end
   end
 
@@ -161,6 +177,10 @@ RSpec.describe Measurement do
     it 'converts to thou' do
       expect(subject.convert_to(:th).quantity).to eq 63_360_000
     end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.4
+    end
   end
 
   describe 'feet' do
@@ -192,6 +212,10 @@ RSpec.describe Measurement do
 
     it 'converts to thou' do
       expect(subject.convert_to(:th).quantity).to eq 63_360_000
+    end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.4
     end
   end
 
@@ -225,6 +249,10 @@ RSpec.describe Measurement do
     it 'converts to thou' do
       expect(subject.convert_to(:th).quantity).to eq 63_360_000
     end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.4
+    end
   end
 
   describe 'thou' do
@@ -256,6 +284,10 @@ RSpec.describe Measurement do
 
     it 'converts to inches' do
       expect(subject.convert_to(:in).quantity).to eq 63_360
+    end
+
+    it 'converts to centimeters' do
+      expect(subject.convert_to(:cm).quantity).to eq 160_934.40000000002
     end
   end
 end
