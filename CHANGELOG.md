@@ -1,3 +1,7 @@
+## ruby-measurement 1.3.0 (Aug 1, 2021)
+
+* Added `Comparable` module to `Measurement`, supporting `<` and `>` operators. *Edmund Lee*
+
 ## ruby-measurement 1.2.3 (Mar 27, 2016)
 
 * Updated parsing to accept UTF-8 fractions (½, ⅓, etc.). *Matt Huggins*
