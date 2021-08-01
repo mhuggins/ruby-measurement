@@ -1,6 +1,6 @@
 # Measurement
 
-[![Build Status](https://secure.travis-ci.org/mhuggins/ruby-measurement.png)](http://travis-ci.org/mhuggins/ruby-measurement)
+[![Build Status](https://github.com/mhuggins/ruby-measurement/actions/workflows/CI.yml/badge.svg)](https://github.com/mhuggins/ruby-measurement/actions/workflows/CI.yml)
 [![Code Climate](https://codeclimate.com/github/mhuggins/ruby-measurement.png)](https://codeclimate.com/github/mhuggins/ruby-measurement)
 
 [ruby-measurement](https://github.com/mhuggins/ruby-measurement) is a simple
