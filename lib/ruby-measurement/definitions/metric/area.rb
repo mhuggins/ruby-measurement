@@ -25,7 +25,7 @@ Measurement.define(:a) do |unit|
 end
 
 Measurement.define(:'m²') do |unit|
-  unit.alias :m2, :'m^2', :'m*c', :'sq m', :'square meter', :'square meters'
+  unit.alias :m2, :'m^2', :'m*m', :'sq m', :'square meter', :'square meters'
   unit.convert_to(:km2) { |value| value / 1_000_000.0 }
   unit.convert_to(:ha) { |value| value / 10_000.0 }
   unit.convert_to(:a) { |value| value / 100 }
