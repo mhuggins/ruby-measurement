@@ -28,7 +28,7 @@ Measurement.define(:'ch²') do |unit|
 end
 
 Measurement.define(:'yd²') do |unit|
-  unit.alias :yd2, :'yd*yd', :'sq yd', :'square yard', :'square yard'
+  unit.alias :yd2, :'yd*yd', :'sq yd', :'square yard', :'square yards'
   unit.convert_to(:mi2) { |value| value / 3_097_600.0 }
   unit.convert_to(:fur2) { |value| value / 48_400.0 }
   unit.convert_to(:ch2) { |value| value / 484.0 }
@@ -37,7 +37,7 @@ Measurement.define(:'yd²') do |unit|
 end
 
 Measurement.define(:'ft²') do |unit|
-  unit.alias :ft2, :'ft*ft', :'sq ft', :'square foot', :'square foot'
+  unit.alias :ft2, :'ft*ft', :'sq ft', :'square foot', :'square feet'
   unit.convert_to(:mi2) { |value| value / 27_878_400.0 }
   unit.convert_to(:fur2) { |value| value / 435_600.0 }
   unit.convert_to(:ch2) { |value| value / 4_356.0 }
